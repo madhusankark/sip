@@ -1,0 +1,219 @@
+{
+  "Investor Routes": [
+    {
+      "endpoint": "POST /investor/login",
+      "description": "Login investor",
+      "input": {
+        "mobile": "9876543210",
+        "password": "pass123"
+      },
+      "success_output": {
+        "message": "Login successful",
+        "token": "jwt_token_here"
+      },
+      "error_output": {
+        "error": "Invalid credentials"
+      }
+    },
+    {
+      "endpoint": "POST /investor/addinvestor",
+      "description": "Add new investor",
+      "input": {
+        "investor_id": "INV101",
+        "first_name": "Ravi",
+        "middle_name": "Kumar",
+        "last_name": "Sharma",
+        "mobile": "9876543210",
+        "email": "ravi@gmail.com",
+        "password": "pass123",
+        "pancard_no": "ABCDE1234F",
+        "adhaar_no": "123456789012",
+        "date_of_birth": "1998-05-10",
+        "gender": "Male",
+        "occupation": "Engineer"
+      },
+      "success_output": {
+        "message": "Investor added successfully"
+      },
+      "error_output": {
+        "error": "Investor already exists"
+      }
+    },
+    {
+      "endpoint": "GET /investor/:id",
+      "description": "Get investor by ID",
+      "headers": {
+        "Authorization": "Bearer jwt_token_here"
+      },
+      "params": {
+        "id": "INV101"
+      },
+      "success_output": {
+        "investor_id": "INV101",
+        "first_name": "Ravi",
+        "last_name": "Sharma",
+        "mobile": "9876543210",
+        "occupation": "Engineer"
+      },
+      "error_output": {
+        "error": "Investor not found"
+      }
+    },
+    {
+      "endpoint": "GET /investor/holdings/:id",
+      "description": "Get investor holdings",
+      "params": {
+        "id": "INV101"
+      },
+      "success_output": [
+        {
+          "fund_name": "Axis Bluechip Fund",
+          "total_units": 120.45,
+          "latest_nav": 45.67,
+          "current_value": 5500
+        }
+      ],
+      "error_output": {
+        "error": "No holdings found"
+      }
+    },
+    {
+      "endpoint": "GET /investor/networth/:id",
+      "description": "Get investor total net worth",
+      "params": {
+        "id": "INV101"
+      },
+      "success_output": {
+        "investor_id": "INV101",
+        "networth": 250000
+      },
+      "error_output": {
+        "error": "Investor not found"
+      }
+    }
+  ],
+
+  "Funds Routes": [
+    {
+      "endpoint": "POST /fund/addfund",
+      "description": "Add mutual fund",
+      "input": {
+        "fund_id": 1,
+        "fund_name": "Axis Bluechip Fund",
+        "fund_type": "Equity",
+        "latest_nav": 45.67
+      },
+      "success_output": {
+        "message": "Fund added successfully"
+      },
+      "error_output": {
+        "error": "Fund already exists"
+      }
+    },
+    {
+      "endpoint": "GET /fund/funds",
+      "description": "Get all funds",
+      "success_output": [
+        {
+          "fund_id": 1,
+          "fund_name": "Axis Bluechip Fund",
+          "fund_type": "Equity",
+          "latest_nav": 45.67
+        }
+      ]
+    },
+    {
+      "endpoint": "PUT /fund/:id/nav",
+      "description": "Update fund NAV",
+      "params": {
+        "id": 1
+      },
+      "input": {
+        "latest_nav": 50.25
+      },
+      "success_output": {
+        "message": "NAV updated successfully"
+      },
+      "error_output": {
+        "error": "Fund not found"
+      }
+    }
+  ],
+
+  "SIP Routes": [
+    {
+      "endpoint": "POST /sip/addsip",
+      "description": "Add SIP",
+      "input": {
+        "sip_id": 1,
+        "portfolio_id": 101,
+        "fund_id": 1,
+        "sip_amount": 5000,
+        "frequency": "Monthly",
+        "start_date": "2026-05-07",
+        "status": "ACTIVE"
+      },
+      "success_output": {
+        "message": "SIP added successfully"
+      },
+      "error_output": {
+        "error": "Failed to add SIP"
+      }
+    },
+    {
+      "endpoint": "GET /sip/:id",
+      "description": "Get SIP by ID",
+      "params": {
+        "id": 1
+      },
+      "success_output": {
+        "sip_id": 1,
+        "portfolio_id": 101,
+        "fund_id": 1,
+        "sip_amount": 5000,
+        "frequency": "Monthly",
+        "status": "ACTIVE"
+      },
+      "error_output": {
+        "error": "SIP not found"
+      }
+    },
+    {
+      "endpoint": "POST /sip/:id/process",
+      "description": "Process SIP investment",
+      "params": {
+        "id": 1
+      },
+      "success_output": {
+        "transaction_id": 10,
+        "units_allocated": 109.48
+      },
+      "error_output": {
+        "error": "SIP processing failed"
+      }
+    },
+    {
+      "endpoint": "GET /sip/:id/transcations",
+      "description": "Get SIP transaction history",
+      "params": {
+        "id": 1
+      },
+      "success_output": [
+        {
+          "transaction_id": 10,
+          "portfolio_id": 101,
+          "fund_id": 1,
+          "sip_id": 1,
+          "transaction_type": "SIP",
+          "amount": 5000,
+          "nav_value": 45.67,
+          "units_allocated": 109.48,
+          "transaction_date": "2026-05-07"
+        }
+      ],
+      "error_output": {
+        "error": "No transactions found"
+      }
+    }
+  ]
+}
