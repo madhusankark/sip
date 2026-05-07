@@ -1,0 +1,10 @@
+const express=require('express')
+const { addinvestor, getinvestor, investorholdings, investornetworth, login } = require('../controllers/investorController')
+const authMiddleware = require('../middleware/authMiddleware')
+const router=express.Router()
+router.post("/login",login)
+router.post("/addinvestor",addinvestor)
+router.get("/:id",authMiddleware,getinvestor)
+router.get("/holdings/:id",investorholdings)
+router.get("/networth/:id",investornetworth)
+module.exports=router
